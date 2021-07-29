@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">clap</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">hihat</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">kick</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">openhat</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">boom</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">ride</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">snare</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">tom</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">tink</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+
+<script>
+  
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); // Get the audio element using a variable $e.keyCode
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`); // Get the key element using a variable $e.keyCode
+    if(!audio) return; // If the audio element is not found, return
+    audio.currentTime = 0; // Set the current time to 0 to rewind to the beginning
+    audio.play(); // Play the audio element, this does not rewind, there's a delay so we need to add something before it
+    key.classList.add('playing'); // Add the class "playing" to the key element, this creates a visual effect but doesnt go away
+  }
+  
+  function removeTransition(element) {
+    if(element.propertyName !== 'transform') return; 
+    console.log(element.propertyName);
+    console.log(this);
+    this.classList.remove('playing'); // Remove the class of playing when transition ends
+  }
+
+  const keys = document.querySelectorAll('.key'); // Get all the key elements
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition)); // Add a listener to each key element, this listener will remove the transition class when the transition is complete
+  window.addEventListener('keydown', playSound); // Add the event listener to the window);
+</script>
+
+
+</body>
+</html>
