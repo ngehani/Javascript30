@@ -16,6 +16,29 @@
     </div>
 
   <script>
+    const secondHand = document.querySelector('.second-hand'); // Get the second-hand and pass it to the variable
+    const minuteHand = document.querySelector('.min-hand'); // Get the minute-hand and pass it to the variable
+    const hourHand = document.querySelector('.hour-hand'); // Get the hour-hand and pass it to the variable
+
+    function setDate() {
+      const now = new Date(); // Get the current date and time
+      const seconds = now.getSeconds();
+      const secondsDegrees = ((seconds / 60) * 360) + 90;  // Calculate the degrees for the seconds hand + compensate for leff to right offset
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`; // Set the seconds hand to the calculated degrees
+
+      const minutes = now.getMinutes();
+      const minutesDegrees = ((minutes / 60) * 360) + 90;  // Calculate the degrees for the minutes hand + compensate for leff to right offset
+      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`; // Set the minutes hand to the calculated degrees
+
+      const hours = now.getHours();
+      const hoursDegrees = ((hours / 12) * 360) + 90;  // Calculate the degrees for the hours hand + compensate for leff to right offset
+      hourHand.style.transform = `rotate(${hoursDegrees}deg)`; // Set the hours hand to the calculated degrees
+
+    
+      console.log(seconds);
+    };
+
+    setInterval(setDate, 1000);
 
 
   </script>
